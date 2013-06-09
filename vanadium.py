@@ -101,21 +101,23 @@ def open_url(url):
 
 def main(argv):
     # FIXME: Use real argument parsing
-    if len(argv) < 2 or argv[1] == '--help' or argv[1] == '-h':
-        sys.stderr.write("Usage: %s --daemon\n       %s <url> [...]\n" %
+    if '--help' in argv or '-h' in argv:
+        sys.stderr.write("Usage: %s --daemon\n       %s [url [...]]\n" %
                          (argv[0], argv[0]))
         sys.exit(1)
-    elif len(argv) == 2 and argv[1] == '--daemon':
+    elif '--daemon' in argv:
         httpd = ThreadedHTTPServer(("127.0.0.1", PORT), Handler)
         print "serving at port", PORT
         try:
             httpd.serve_forever()
         except KeyboardInterrupt:
             httpd.events.put(None)
-    else:
+    elif len(argv) > 1:
         # Open windows
         for i in argv[1:]:
             open_url(i)
+    else:
+        open_url('')
 
 if __name__ == '__main__':
     main(sys.argv)
