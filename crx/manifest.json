@@ -9,7 +9,7 @@
     "http://localhost:8636/*"
   ],
   "background": {
-    "persistent": false,
+    "persistent": true, // Otherwise doesn't work on startup?
     "scripts": ["background.js"]
   }
 }
